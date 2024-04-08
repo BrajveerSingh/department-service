@@ -1,0 +1,49 @@
+spring:
+#  r2dbc:
+#    url: r2dbc:mysql://localhost:3306/department_db
+#    username: root
+#    password: root
+  application:
+    name: DEPARTMENT-SERVICE
+  config:
+    import: optional:configserver:http://localhost:8888
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  zipkin:
+    base-url:  http://127.0.0.1:9411/
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  level:
+    org:
+      springframework:
+        web: DEBUG
+
+
+
+#eureka:
+#  #  client:
+#  #    serviceUrl:
+#  #      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    #    preferIpAddress: true
+#    #    instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+#    #    leaseRenewalIntervalInSeconds: 5
+#    #    leaseExpirationDurationInSeconds: 10
+#    #    metadataMap.instanceId: ${spring.application.instance_id:${random.value}}
+#    client:
+#      serviceUrl:
+#        defaultZone: http://localhost:8761/eureka/
